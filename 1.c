@@ -9,8 +9,8 @@ net
 	
 	
 
-基础概念
-	二层设备 L2
+一. 基础概念
+1.	二层设备 L2
 		工作在数据链路层的设备(把MAC头摘下来)，MAC层。(交换机switch)根据MAC地址进行转发或丢弃
 		
 	三层设备 L3
@@ -18,7 +18,7 @@ net
 		
 	
 
-	MAC地址主要应用于局域网通信(MAC地址无定位功能)
+2.	MAC地址主要应用于局域网通信(MAC地址无定位功能)
 	IP地址用于跨子网通信(IP地址有定位功能)	
 	
 	三层头中有协议类型(tcp / udp)
@@ -27,7 +27,7 @@ net
 
 	
 	
-	命令 : ip addr (iproute2工具中) / ifconfig (net-tools工具中)
+3.	命令 : ip addr (iproute2工具中) / ifconfig (net-tools工具中)
 	
 	net-tools起源于BSD，自2001年起，Linux社区已经对其停止维护，而iproute2旨在取代net-tools，并提供了一
 	些新功能。一些Linux发行版已经停止支持net-tools，只支持iproute2。
@@ -35,22 +35,22 @@ net
 	内核通讯。
 	net-tools中工具的名字比较杂乱，而iproute2则相对整齐和直观，基本是ip命令加后面的子命令。
 	
-root@test:~# ip addr
-1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default 
-    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-    inet 127.0.0.1/8 scope host lo
-       valid_lft forever preferred_lft forever
-    inet6 ::1/128 scope host 
-       valid_lft forever preferred_lft forever
-2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
-    link/ether fa:16:3e:c7:79:75 brd ff:ff:ff:ff:ff:ff
-    inet 10.100.122.2/24 brd 10.100.122.255 scope global eth0
-       valid_lft forever preferred_lft forever
-    inet6 fe80::f816:3eff:fec7:7975/64 scope link 
-       valid_lft forever preferred_lft forever
+	root@test:~# ip addr
+	1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default 
+		link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+		inet 127.0.0.1/8 scope host lo
+		   valid_lft forever preferred_lft forever
+		inet6 ::1/128 scope host 
+		   valid_lft forever preferred_lft forever
+	2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+		link/ether fa:16:3e:c7:79:75 brd ff:ff:ff:ff:ff:ff
+		inet 10.100.122.2/24 brd 10.100.122.255 scope global eth0
+		   valid_lft forever preferred_lft forever
+		inet6 fe80::f816:3eff:fec7:7975/64 scope link 
+		   valid_lft forever preferred_lft forever
 
 	   
-	无类型域间选路(CIDR)
+4.	无类型域间选路(CIDR)
 
 		10.100.122.2/24 这种地址表现形式,就是CIDR. 32位中,前24位是网络号,后8位是主机号
 		
@@ -58,12 +58,12 @@ root@test:~# ip addr
 		255.255.255.0  子网掩码
 		广播地址与子网掩码 AND计算 , 10.100.122.0 是网络号
 		
-	私有IP地址范围(局域网IP)
+5.	私有IP地址范围(局域网IP)
 		A类 10.0.0.0 - 10.255.255.255			最大主机数 16777214
 		B类 172.16.0.0 - 172.31.255.255 		65534
 		C类 192.168.0.0 - 192.168.255.255		254
 	
-	net_device_flags 网络设备的状态标识
+6.	net_device_flags 网络设备的状态标识
 		eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
 		
 		UP 表示网卡处于启动的状态；
@@ -85,9 +85,35 @@ root@test:~# ip addr
 				TOS是IP头中的一个字段
 				
 	
-	   
-	   
-	   
+7. 配置IP地址
+	net tools：
+		$ sudo ifconfig eth1 10.0.0.1/24
+		$ sudo ifconfig eth1 up
+		   
+	iproute2:
+		$ sudo ip addr add 10.0.0.1/24 dev eth1
+		$ sudo ip link set up eth1
+		
+8. 只有是一个网段的，它才会发送 ARP 请求，获取 MAC 地址。
+	
+   Linux 默认的逻辑是，如果这是一个跨网段的调用，它便不会直接将包发送到网络上，而是企图将包发送到网关。
+   
+   跨网段的通信，一般都是ip包头的目标地址是最终目标地址，但2层包头的目标地址总是下一个网关的
+   
+   
+三. DHCP(动态主机配置协议 Dynamic Host Configuration Protocol)
+
+	广播包封装了UDP，UDP封装了BOOTP
+   
+    PXE客户端， 安装系统
+
+
+
+二. 实验	   
+	你网关的ip地址 不对  跨网段就ping不通   
+	你直连 ping  即使网关ip不对也能ping通
+
+
 	   
 	   
 	   
