@@ -3,7 +3,11 @@ net
 	
 	
 	物理层 					PHY层
-	数据链路层				MAC层
+	数据链路层				MAC层(Medium Access Control 媒体访问控制)
+								[解决 发给谁，谁接收的问题]
+								最后面是CRC，循环冗余检测，XOR异或算法
+								ARP协议，已知IP地址，获得MAC地址
+								RARP协议，已知MAC地址，获得IP地址
 	网络层 (路由协议)		IP层
 	传输层					TCP / UDP层
 	
