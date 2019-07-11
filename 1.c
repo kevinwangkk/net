@@ -112,6 +112,17 @@ net
     PXE客户端， 安装系统
 
 
+四. 交换机中使用 - STP协议（Spanning Tree Protocol）
+	解决在网络中多个交换机的数据发送给谁的问题（交换机优先级）
+
+
+五. VLAN
+	二层的头上加一个 TAG，里面有一个 VLAN ID，一共12位，可以划分 4096 个 VLAN
+	
+	802.1Q Tag ： 类型， 优先级， 规范格式， VLAN ID（12位）
+
+
+	VTAG   VLAN ID
 
 二. 实验	   
 	你网关的ip地址 不对  跨网段就ping不通   
