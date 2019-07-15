@@ -7,10 +7,11 @@ net
 								最后面是CRC，循环冗余检测，XOR异或算法
 								ARP协议，已知IP地址，获得MAC地址
 								RARP协议，已知MAC地址，获得IP地址
+								(VLAN)
 	网络层 (路由协议)		IP层
-								ICMP
-	传输层					TCP / UDP层
-	
+	传输层					TCP / UDP层  (ICMP)
+	应用层					应用层 （DNS，HTTP）
+	 
 	
 
 一. 基础概念
