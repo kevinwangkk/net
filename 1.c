@@ -1,7 +1,6 @@
 net
 	网络分层
 	
-	
 	物理层 					PHY层
 	数据链路层				MAC层(Medium Access Control 媒体访问控制)
 								[解决 发给谁，谁接收的问题]
@@ -9,6 +8,7 @@ net
 								ARP协议，已知IP地址，获得MAC地址
 								RARP协议，已知MAC地址，获得IP地址
 	网络层 (路由协议)		IP层
+								ICMP
 	传输层					TCP / UDP层
 	
 	
@@ -123,6 +123,22 @@ net
 
 
 	VTAG   VLAN ID
+	
+	
+六. ICMP - Internet Control Message Protocol 互联网控制报文协议
+	
+		ping
+		
+	ICMP报文封装在IP包中
+		
+	tcpdump -i eth0 icmp
+
+
+
+
+
+	
+	
 
 二. 实验	   
 	你网关的ip地址 不对  跨网段就ping不通   
